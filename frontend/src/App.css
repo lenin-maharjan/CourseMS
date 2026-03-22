@@ -1,0 +1,39 @@
+.container {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+}
+
+.student-form {
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.student-form label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.student-form input[type="text"],
+.student-form input[type="number"],
+.student-form select {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.students-table th,
+.students-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.students-table th {
+  background: #f4f4f4;
+}
