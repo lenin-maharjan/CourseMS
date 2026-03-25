@@ -11,7 +11,7 @@
  * 3. Returns success response or handles errors
  */
 
-const courseService = require("../services/course.service");
+const courseService = require("../services/course.services");
 const { NODE_ENV } = require("../config/config");
 
 // ============================================

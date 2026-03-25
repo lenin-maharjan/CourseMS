@@ -12,7 +12,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import controllers
-const userController = require("../controllers/user.controller");
+const userController = require("../controllers/user.controllers");
 
 // Import middleware
 const { protect, adminOnly } = require("../middleware/auth.middleware");

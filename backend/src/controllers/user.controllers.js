@@ -1,4 +1,4 @@
- const userService = require("../services/user.service");
+const userService = require("../services/user.services");
 const { NODE_ENV } = require("../config/config");
 
 // Simple validation helper - easy for beginners to understand

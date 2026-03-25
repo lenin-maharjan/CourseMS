@@ -15,7 +15,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import controllers
-const courseController = require("../controllers/course.controller");
+const courseController = require("../controllers/course.controllers");
 
 // Import middleware
 const { protect, teacherOnly, adminOnly } = require("../middleware/auth.middleware");

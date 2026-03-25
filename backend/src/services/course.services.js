@@ -11,9 +11,9 @@
  * 4. Handle errors gracefully
  */
 
-const Course = require("../models/course.model");
+const Course = require("../models/course.models");
 const User = require("../models/user.models");
-const Enrollment = require("../models/enrollment.model");
+const Enrollment = require("../models/enrollment.models");
 const { deleteOldFile, getFileUrl } = require("../config/multer.config");
 
 /**
