@@ -169,6 +169,25 @@ const getUserById = async (req, res) => {
   }
 };
 
+const uploadAvatar = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    const avatarUrl = `/uploads/${req.file.filename}`;
+    const result = await userService.updateUserProfile(req.user.id, { avatar: avatarUrl });
+
+    res.status(200).json({
+      success: true,
+      message: "Avatar uploaded",
+      data: result.data,
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+};
+
 const changePassword = async (req, res) => {
   try {
     // Simple validation
@@ -229,6 +248,7 @@ module.exports = {
   updateProfile,
   getAllUsers,
   getUserById,
+  uploadAvatar,
   changePassword,
   deactivateUser,
   createUser,

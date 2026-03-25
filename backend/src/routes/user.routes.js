@@ -3,6 +3,7 @@ const router = express.Router();
 
 const userController = require("../controllers/user.controllers");
 const { protect, adminOnly } = require("../middleware/auth.middleware");
+const upload = require("../middleware/upload.middleware");
 
 // Public routes
 router.post("/register", userController.register);
@@ -14,6 +15,7 @@ router.post("/logout", protect, userController.logout);
 router.get("/profile", protect, userController.getProfile);
 router.put("/profile", protect, userController.updateProfile);
 router.post("/change-password", protect, userController.changePassword);
+router.post("/upload-avatar", protect, upload.single("avatar"), userController.uploadAvatar);
 
 // Admin routes
 router.get("/", protect, adminOnly, userController.getAllUsers);
