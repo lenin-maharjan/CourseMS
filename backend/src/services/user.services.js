@@ -1,4 +1,5 @@
 const User = require("../models/user.models");
+const { deleteOldFile, getFileUrl } = require("../config/multer.config");
 
 const registerUser = async (userData) => {
   try {
@@ -190,6 +191,83 @@ const deactivateUser = async (userId) => {
   }
 };
 
+/**
+ * Update user's avatar
+ * @param {string} userId - User ID
+ * @param {Object} file - Uploaded file object from multer
+ * @returns {Object} Updated user with new avatar URL
+ */
+const updateAvatar = async (userId, file) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    // Delete old avatar if exists (not the default one)
+    if (user.avatar) {
+      const oldFilename = user.avatar.split("/").pop();
+      deleteOldFile(oldFilename, "avatar");
+    }
+
+    // Update with new avatar URL
+    const avatarUrl = getFileUrl(file.filename, "avatar");
+    user.avatar = avatarUrl;
+    await user.save();
+
+    return {
+      success: true,
+      message: "Avatar updated successfully",
+      data: {
+        user,
+        avatarUrl,
+      },
+    };
+  } catch (error) {
+    console.error("Error in updateAvatar:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Delete user's avatar (reset to default)
+ * @param {string} userId - User ID
+ * @returns {Object} Success message
+ */
+const deleteAvatar = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    // Delete old avatar file if exists
+    if (user.avatar) {
+      const oldFilename = user.avatar.split("/").pop();
+      deleteOldFile(oldFilename, "avatar");
+    }
+
+    // Reset avatar to null (default)
+    user.avatar = null;
+    await user.save();
+
+    return {
+      success: true,
+      message: "Avatar removed successfully",
+      data: { user },
+    };
+  } catch (error) {
+    console.error("Error in deleteAvatar:", error.message);
+    throw error;
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -198,4 +276,6 @@ module.exports = {
   getAllUsers,
   changePassword,
   deactivateUser,
+  updateAvatar,
+  deleteAvatar,
 };
